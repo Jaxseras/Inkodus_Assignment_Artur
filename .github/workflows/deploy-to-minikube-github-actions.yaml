@@ -21,7 +21,17 @@ jobs:
           docker images         
     - name: Deploy to minikube
       run:
-        kubectl apply -f k8s-node-app.yaml
+          kubectl apply -f k8s-node-app.yaml
+    - name: Try the cluster again!
+      run: kubectl get pods -A
+    - name: Install Helm    
+      run: |
+          curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+          sudo apt-get install apt-transport-https --yes
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+          sudo apt-get update
+          sudo apt-get install helm
+
     - name: Test service URLs
       run: |
           minikube service list
