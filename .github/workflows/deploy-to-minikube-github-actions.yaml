@@ -25,7 +25,7 @@ jobs:
     - name: Test service URLs
       run: |
           minikube service list
-          curl $(minikube service example --url)
+          curl $(minikube service nodejs-app --url)
           sleep 300
 #          minikube service nodejs-app --url
 
